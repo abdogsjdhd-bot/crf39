@@ -124,7 +124,7 @@ async function handleAdminPanel(request, db) {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        title: document.getElementById('title',).value,
+                        title: document.getElementById('title').value,
                         price: parseFloat(document.getElementById('price').value),
                         image_url: document.getElementById('image_url').value,
                         slug: 'prod-' + Date.now()
