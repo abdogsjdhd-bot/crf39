@@ -4,5 +4,5 @@ compatibility_date = "2026-09-25"
 
 [[d1_databases]]
 binding = "DB"
-database_name = "store_db"
-database_id = "YOUR_D1_DATABASE_ID"
+database_name = "turk"
+database_id = "93faffe1-2949-4871-aeb6-2c5307aa8a74"
