@@ -63,7 +63,7 @@ async function handleStorefront(db) {
                 ${products.results && products.results.length > 0 ? products.results.map(p => `
                     <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm">
                         <div class="bg-gray-100 rounded-xl h-52 mb-4 overflow-hidden flex items-center justify-center">
-                            <img src="${p.image_url \vert{}\vert{} 'https://via.placeholder.com/300'}" alt="${p.title}" class="object-cover h-full w-full">
+                            <img src="${p.image_url}" alt="${p.title}" class="object-cover h-full w-full">
                         </div>
                         <h3 class="font-medium text-base mb-2">${p.title}</h3>
                         <div class="flex items-center justify-between mt-4">
@@ -112,7 +112,7 @@ async function handleAdminPanel(request, db) {
                 </div>
                 <div>
                     <label class="block text-sm font-medium mb-1">لینک تصویر</label>
-                    <input type="text" id="image_url" class="w-full border rounded-xl p-3 text-sm focus:outline-none focus:ring-2 focus:ring-black">
+                    <input type="text" id="image_url" required class="w-full border rounded-xl p-3 text-sm focus:outline-none focus:ring-2 focus:ring-black">
                 </div>
                 <button type="submit" class="bg-black text-white w-full py-3 rounded-xl font-medium hover:bg-gray-800 transition">ذخیره محصول</button>
             </form>
