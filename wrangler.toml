@@ -1,8 +1,11 @@
-name = "crf399"
-main = "index.js"
-compatibility_date = "2026-09-25"
+name = "seyed-qeshmi"
+compatibility_date = "2026-09-24"
+
+[pages]
+# Deploy with Cloudflare Pages; Functions live in /functions.
 
 [[d1_databases]]
 binding = "DB"
-database_name = "turk"
-database_id = "93faffe1-2949-4871-aeb6-2c5307aa8a74"
+database_name = "seyed-qeshmi-db"
+database_id = "PUT_YOUR_D1_DATABASE_ID_HERE"
+migrations_dir = "migrations"

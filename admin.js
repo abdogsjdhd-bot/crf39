@@ -1,0 +1,20 @@
+const $=s=>document.querySelector(s);const fa=n=>new Intl.NumberFormat("fa-IR").format(Number(n||0));
+async function api(url,opts={}){const r=await fetch(url,{headers:{"Content-Type":"application/json",...(opts.headers||{})},...opts});const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||"خطا");return d}
+function msg(text,ok=false){$("#form-message").className=ok?"success":"error";$("#form-message").textContent=text}
+async function boot(){try{await api("/api/auth");showDash();await refresh()}catch{}}
+function showDash(){ $("#login-box").classList.add("hidden");$("#dashboard").classList.remove("hidden");$("#logout").classList.remove("hidden")}
+async function refresh(){const [c,p]=await Promise.all([api("/api/categories"),api("/api/products")]);renderCats(c.categories);fillCats(c.categories);renderProducts(p.products)}
+function renderCats(cs){$("#category-list").innerHTML=cs.map(c=>`<div class="cat-row"><span>${esc(c.name)}</span><button class="btn danger" onclick="delCat(${c.id})">حذف</button></div>`).join("")}
+function fillCats(cs){$("#category_id").innerHTML='<option value="">بدون دسته‌بندی</option>'+cs.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join("")}
+function renderProducts(ps){$("#count").textContent=`${fa(ps.length)} محصول`;$("#admin-products").innerHTML=ps.map(p=>`<div class="admin-product"><div class="admin-product-info">${p.image_url?`<img class="thumb" src="${esc(p.image_url)}">`:'<div class="thumb"></div>'}<div><b>${esc(p.name)}</b><div class="muted">${fa(p.price)} تومان</div></div></div><div><button class="btn btn-ghost" onclick='editProduct(${JSON.stringify(p)})'>ویرایش</button> <button class="btn danger" onclick="delProduct(${p.id})">حذف</button></div></div>`).join("")}
+function editProduct(p){$("#product-id").value=p.id;$("#name").value=p.name;$("#category_id").value=p.category_id||"";$("#price").value=p.price;$("#old_price").value=p.old_price||"";$("#image_url").value=p.image_url||"";$("#description").value=p.description||"";$("#is_featured").checked=!!p.is_featured;$("#form-title").textContent="ویرایش محصول";window.scrollTo({top:0,behavior:"smooth"})}
+function clearForm(){$("#product-form").reset();$("#product-id").value="";$("#form-title").textContent="محصول جدید";msg("")}
+window.editProduct=editProduct;window.delProduct=async id=>{if(!confirm("این محصول حذف شود؟"))return;try{await api("/api/products/"+id,{method:"DELETE"});await refresh()}catch(e){alert(e.message)}};
+window.delCat=async id=>{if(!confirm("دسته‌بندی حذف شود؟ محصولات آن بدون دسته می‌شوند."))return;try{await api("/api/categories/"+id,{method:"DELETE"});await refresh()}catch(e){alert(e.message)}};
+$("#login-form").onsubmit=async e=>{e.preventDefault();try{await api("/api/auth",{method:"POST",body:JSON.stringify({password:$("#password").value})});showDash();await refresh()}catch(err){$("#login-error").textContent=err.message}};
+$("#logout").onclick=async()=>{await api("/api/auth",{method:"DELETE"});location.reload()};
+$("#new-product").onclick=clearForm;$("#cancel-edit").onclick=clearForm;
+$("#product-form").onsubmit=async e=>{e.preventDefault();const id=$("#product-id").value;const body={name:$("#name").value,category_id:$("#category_id").value?Number($("#category_id").value):null,price:Number($("#price").value),old_price:$("#old_price").value?Number($("#old_price").value):null,image_url:$("#image_url").value||null,description:$("#description").value||"",is_featured:$("#is_featured").checked?1:0};try{await api(id?"/api/products/"+id:"/api/products",{method:id?"PUT":"POST",body:JSON.stringify(body)});msg("محصول ذخیره شد.",true);clearForm();await refresh()}catch(err){msg(err.message)}};
+$("#category-form").onsubmit=async e=>{e.preventDefault();try{await api("/api/categories",{method:"POST",body:JSON.stringify({name:$("#category-name").value})});$("#category-name").value="";await refresh()}catch(err){alert(err.message)}};
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+boot();

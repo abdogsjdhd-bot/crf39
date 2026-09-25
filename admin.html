@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>مدیریت فروشگاه | سید قشمی</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="admin-page">
+<header class="topbar"><div class="container nav">
+  <a class="brand" href="/"><span class="brand-mark">س</span><span><b>پنل سید قشمی</b><small>مدیریت فروشگاه</small></span></a>
+  <button id="logout" class="btn btn-ghost hidden">خروج</button>
+</div></header>
+
+<main class="section">
+<div class="container">
+  <div id="login-box" class="admin-box">
+    <h1>ورود مدیر</h1>
+    <p class="muted">رمز مدیریت را وارد کنید.</p>
+    <form id="login-form"><input id="password" type="password" placeholder="رمز مدیریت" required><button class="btn btn-primary">ورود</button></form>
+    <div id="login-error" class="error"></div>
+  </div>
+
+  <div id="dashboard" class="hidden">
+    <div class="section-head"><div><span class="eyebrow">داشبورد</span><h1>مدیریت محصولات</h1></div><button id="new-product" class="btn btn-primary">+ محصول جدید</button></div>
+
+    <div class="admin-grid">
+      <section class="admin-box">
+        <h2 id="form-title">محصول جدید</h2>
+        <form id="product-form">
+          <input type="hidden" id="product-id">
+          <label>نام محصول<input id="name" required></label>
+          <label>دسته‌بندی<select id="category_id"></select></label>
+          <label>قیمت (تومان)<input id="price" type="number" min="0" required></label>
+          <label>قیمت قبل از تخفیف (اختیاری)<input id="old_price" type="number" min="0"></label>
+          <label>آدرس عکس محصول<input id="image_url" type="url" placeholder="https://..."></label>
+          <label>توضیحات<textarea id="description" rows="4"></textarea></label>
+          <label class="check"><input id="is_featured" type="checkbox"> محصول ویژه</label>
+          <div class="form-actions"><button class="btn btn-primary">ذخیره</button><button type="button" id="cancel-edit" class="btn btn-ghost">پاک کردن</button></div>
+          <div id="form-message"></div>
+        </form>
+      </section>
+
+      <section class="admin-box">
+        <h2>دسته‌بندی‌ها</h2>
+        <form id="category-form" class="inline-form"><input id="category-name" placeholder="مثلاً آشپزخانه" required><button class="btn btn-primary">افزودن</button></form>
+        <div id="category-list" class="admin-list"></div>
+      </section>
+    </div>
+
+    <section class="admin-box">
+      <div class="section-head"><h2>محصولات ثبت‌شده</h2><span id="count" class="muted"></span></div>
+      <div id="admin-products" class="admin-products"></div>
+    </section>
+  </div>
+</div>
+</main>
+<script src="/admin.js" defer></script>
+</body>
+</html>
