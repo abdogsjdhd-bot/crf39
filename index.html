@@ -3,78 +3,58 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>لوازم خانگی سید قشمی | قشم</title>
-  <meta name="description" content="فروش حضوری و آنلاین لوازم خانگی سید قشمی در جزیره قشم">
+  <title>مدیریت فروشگاه | سید قشمی</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
-<body>
-<header class="topbar">
-  <div class="container nav">
-    <a class="brand" href="/">
-      <span class="brand-mark">س</span>
-      <span><b>سید قشمی</b><small>لوازم خانگی</small></span>
-    </a>
-    <nav>
-      <a href="#products">محصولات</a>
-      <a href="#about">درباره ما</a>
-      <a href="#contact">تماس</a>
-      <a class="btn btn-primary" href="tel:09218614200">تماس فوری</a>
-    </nav>
+<body class="admin-page">
+<header class="topbar"><div class="container nav">
+  <a class="brand" href="/"><span class="brand-mark">س</span><span><b>پنل سید قشمی</b><small>مدیریت فروشگاه</small></span></a>
+  <button id="logout" class="btn btn-ghost hidden">خروج</button>
+</div></header>
+
+<main class="section">
+<div class="container">
+  <div id="login-box" class="admin-box">
+    <h1>ورود مدیر</h1>
+    <p class="muted">رمز مدیریت را وارد کنید.</p>
+    <form id="login-form"><input id="password" type="password" placeholder="رمز مدیریت" required><button class="btn btn-primary">ورود</button></form>
+    <div id="login-error" class="error"></div>
   </div>
-</header>
 
-<main>
-  <section class="hero">
-    <div class="container hero-grid">
-      <div>
-        <span class="eyebrow">فروش حضوری و آنلاین در قشم</span>
-        <h1>لوازم خانگی سید قشمی</h1>
-        <p>خرید لوازم خانگی با امکان مشاهده محصولات، قیمت و تخفیف‌ها. برای سفارش و استعلام موجودی با ما تماس بگیرید.</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#products">مشاهده محصولات</a>
-          <a class="btn btn-ghost" href="tel:09218614200">۰۹۲۱۸۶۱۴۲۰۰</a>
-        </div>
-        <div class="trust-row">
-          <span>✓ فروش حضوری</span><span>✓ فروش آنلاین</span><span>✓ ارسال</span>
-        </div>
-      </div>
-      <div class="hero-card">
-        <div class="hero-logo">سید<br>قشمی</div>
-        <p>جزیره قشم، روستای گیاهدان</p>
-        <small>جنب جاده اصلی، بغل کالای خواب</small>
-      </div>
-    </div>
-  </section>
+  <div id="dashboard" class="hidden">
+    <div class="section-head"><div><span class="eyebrow">داشبورد</span><h1>مدیریت محصولات</h1></div><button id="new-product" class="btn btn-primary">+ محصول جدید</button></div>
 
-  <section id="products" class="section">
-    <div class="container">
-      <div class="section-head">
-        <div><span class="eyebrow">فروشگاه</span><h2>محصولات</h2></div>
-        <div id="categories" class="chips"></div>
-      </div>
-      <div id="products-grid" class="product-grid">
-        <div class="loading">در حال دریافت محصولات...</div>
-      </div>
-    </div>
-  </section>
+    <div class="admin-grid">
+      <section class="admin-box">
+        <h2 id="form-title">محصول جدید</h2>
+        <form id="product-form">
+          <input type="hidden" id="product-id">
+          <label>نام محصول<input id="name" required></label>
+          <label>دسته‌بندی<select id="category_id"></select></label>
+          <label>قیمت (تومان)<input id="price" type="number" min="0" required></label>
+          <label>قیمت قبل از تخفیف (اختیاری)<input id="old_price" type="number" min="0"></label>
+          <label>آدرس عکس محصول<input id="image_url" type="url" placeholder="https://..."></label>
+          <label>توضیحات<textarea id="description" rows="4"></textarea></label>
+          <label class="check"><input id="is_featured" type="checkbox"> محصول ویژه</label>
+          <div class="form-actions"><button class="btn btn-primary">ذخیره</button><button type="button" id="cancel-edit" class="btn btn-ghost">پاک کردن</button></div>
+          <div id="form-message"></div>
+        </form>
+      </section>
 
-  <section id="about" class="section alt">
-    <div class="container info-grid">
-      <div><span class="eyebrow">درباره فروشگاه</span><h2>سید قشمی</h2>
-        <p>فروش حضوری و آنلاین لوازم خانگی در جزیره قشم.</p>
-        <p class="muted">آدرس: جزیره قشم، روستای گیاهدان، جنب جاده اصلی، بغل کالای خواب، لوازم خانگی سید قشمی</p>
-      </div>
-      <div class="info-card"><b>راه‌های ارتباطی</b><a href="tel:09218614200">۰۹۲۱۸۶۱۴۲۰۰</a><a href="https://www.instagram.com/seyed.qeshmii/" target="_blank" rel="noopener">اینستاگرام: @seyed.qeshmii</a></div>
+      <section class="admin-box">
+        <h2>دسته‌بندی‌ها</h2>
+        <form id="category-form" class="inline-form"><input id="category-name" placeholder="مثلاً آشپزخانه" required><button class="btn btn-primary">افزودن</button></form>
+        <div id="category-list" class="admin-list"></div>
+      </section>
     </div>
-  </section>
+
+    <section class="admin-box">
+      <div class="section-head"><h2>محصولات ثبت‌شده</h2><span id="count" class="muted"></span></div>
+      <div id="admin-products" class="admin-products"></div>
+    </section>
+  </div>
+</div>
 </main>
-
-<footer id="contact">
-  <div class="container footer-grid">
-    <div><b>لوازم خانگی سید قشمی</b><p>قشم، گیاهدان</p></div>
-    <div><a href="tel:09218614200">تماس: ۰۹۲۱۸۶۱۴۲۰۰</a><a href="https://www.instagram.com/seyed.qeshmii/" target="_blank" rel="noopener">اینستاگرام</a></div>
-  </div>
-</footer>
-<script src="/app.js" defer></script>
+<script src="/admin.js" defer></script>
 </body>
 </html>
